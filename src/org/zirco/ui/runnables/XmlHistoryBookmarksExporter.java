@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.utils.ApplicationUtils;
 import org.zirco.utils.IOUtils;
 

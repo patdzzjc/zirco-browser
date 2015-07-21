@@ -15,8 +15,7 @@
 
 package org.zirco.ui.activities;
 
-import org.zirco.R;
-
+import com.polysaas.browser.R;
 import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

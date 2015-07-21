@@ -15,12 +15,14 @@
 
 package org.zirco.ui.components;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.controllers.Controller;
 import org.zirco.ui.activities.MainActivity;
 import org.zirco.utils.ApplicationUtils;
 import org.zirco.utils.Constants;
 import org.zirco.utils.UrlUtils;
+
+import com.polysaas.browser.UrlAccessUtils;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -66,6 +68,11 @@ public class CustomWebViewClient extends WebViewClient {
 		if (url.equals(Constants.URL_ABOUT_START)) {
 			view.loadDataWithBaseURL("file:///android_asset/startpage/",
 					ApplicationUtils.getStartPage(view.getContext()), "text/html", "UTF-8", "about:start");
+		}
+		
+		if(UrlAccessUtils.isBlockedUrl(url)) {
+			view.loadDataWithBaseURL("file:///android_asset/blockedurlpage/",
+					ApplicationUtils.getBlockedUrlPage(view.getContext(), url), "text/html", "UTF-8", "about:blockedurl");	
 		}
 		
 		((CustomWebView) view).notifyPageStarted();
@@ -159,9 +166,14 @@ public class CustomWebViewClient extends WebViewClient {
 				return true;
 				
 			} else {			
-				((CustomWebView) view).resetLoadedUrl();
-				mMainActivity.onUrlLoading(url);
-				return false;
+                if (UrlAccessUtils.isBlockedUrl(url)) {
+                    mMainActivity.onUrlBlocked(url);
+                    return true;
+                } else {
+                    ((CustomWebView) view).resetLoadedUrl();
+                    mMainActivity.onUrlLoading(url);
+                    return false;
+                }
 			}
 		}
 	}

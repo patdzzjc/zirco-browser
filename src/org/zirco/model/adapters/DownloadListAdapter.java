@@ -19,7 +19,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.model.items.DownloadItem;
 
 import android.content.Context;

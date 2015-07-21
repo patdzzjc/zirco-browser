@@ -23,7 +23,7 @@ import org.greendroid.QuickAction;
 import org.greendroid.QuickActionGrid;
 import org.greendroid.QuickActionWidget;
 import org.greendroid.QuickActionWidget.OnQuickActionClickListener;
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.controllers.Controller;
 import org.zirco.events.EventConstants;
 import org.zirco.events.EventController;
@@ -42,7 +42,6 @@ import org.zirco.utils.AnimationManager;
 import org.zirco.utils.ApplicationUtils;
 import org.zirco.utils.Constants;
 import org.zirco.utils.UrlUtils;
-
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -70,6 +69,7 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -77,12 +77,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.DownloadListener;
 import android.webkit.JsPromptResult;
@@ -92,6 +91,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebIconDatabase;
 import android.webkit.WebView;
 import android.webkit.WebView.HitTestResult;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
@@ -102,10 +102,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SimpleCursorAdapter.CursorToStringConverter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-import android.widget.SimpleCursorAdapter.CursorToStringConverter;
 
 /**
  * The application main activity.
@@ -513,6 +513,15 @@ public class MainActivity extends Activity implements IToolbarsContainer, OnTouc
     		
     	});
     	
+    	mUrlEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mGoButton.performClick();
+			}
+		});
+    	
 
     	mUrlTextWatcher = new TextWatcher() {			
     		@Override
@@ -529,16 +538,7 @@ public class MainActivity extends Activity implements IToolbarsContainer, OnTouc
     	
     	mUrlEditText.addTextChangedListener(mUrlTextWatcher);
     	
-    	mUrlEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-    		@Override
-    		public void onFocusChange(View v, boolean hasFocus) {
-    			// Select all when focus gained.
-    			if (hasFocus) {
-    				mUrlEditText.setSelection(0, mUrlEditText.getText().length());
-    			}
-    		}
-    	});    	
+    	mUrlEditText.setSelectAllOnFocus(true);   	
     	
     	mUrlEditText.setCompoundDrawablePadding(5);
     	    	
@@ -548,7 +548,8 @@ public class MainActivity extends Activity implements IToolbarsContainer, OnTouc
             	
             	if (mCurrentWebView.isLoading()) {
             		mCurrentWebView.stopLoading();
-            	} else if (!mCurrentWebView.isSameUrl(mUrlEditText.getText().toString())) {
+            	} else if (!mCurrentWebView.isSameUrl(mUrlEditText.getText().toString())
+            			|| Constants.URL_ABOUT_START.equals(mUrlEditText.getText().toString())) {
             		navigateToUrl();
             	} else {
             		mCurrentWebView.reload();
@@ -1992,6 +1993,20 @@ public class MainActivity extends Activity implements IToolbarsContainer, OnTouc
 	
 	public void onUrlLoading(String url) {
 		setToolbarsVisibility(true);
+	}
+	
+	public void onUrlBlocked(String url) {
+		new AlertDialog.Builder(this)
+		.setTitle(R.string.Main_UrlBlockedTitle)
+		.setMessage(String.format(getString(R.string.Main_UrlBlockedMessage), url))
+		.setPositiveButton(android.R.string.ok,
+				new AlertDialog.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which) { }
+		})
+		.setCancelable(true)
+		.create()
+		.show();
 	}
 	
 	public void onMailTo(String url) {

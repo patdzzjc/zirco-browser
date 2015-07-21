@@ -15,7 +15,7 @@
 
 package org.zirco.utils;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 
 import android.content.Context;
 

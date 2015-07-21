@@ -15,7 +15,7 @@
 
 package org.zirco.ui.activities;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.model.adapters.BookmarksCursorAdapter;
 import org.zirco.model.items.BookmarkItem;
 import org.zirco.providers.BookmarksProviderWrapper;

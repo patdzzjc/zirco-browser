@@ -15,7 +15,7 @@
 
 package org.zirco.ui.activities.preferences;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 
 import android.content.Context;
 import android.util.Log;

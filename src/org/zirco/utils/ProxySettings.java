@@ -10,7 +10,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.zirco.R;
+import com.polysaas.browser.R;
 
 import android.content.ContentResolver;
 import android.content.Context;

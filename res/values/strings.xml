@@ -534,4 +534,11 @@
     <!-- 0.4.3 -->
     <string name="VideoLoading">Loading video\u2026</string>
     
+    <!-- 0.4.7p -->
+    <string name="Main.UrlBlockedTitle">Warning</string>
+    <string name="Main.UrlBlockedMessage">The url %1$s has be blocked!</string>
+    <string name="BlockedUrlPage.Welcome">Warning</string>
+    <string name="BlockedUrlPage.Tip">The web has been blocked</string>
+    <string name="BlockedUrlPage.Urls">The blocked url is %s</string>
+    
 </resources>

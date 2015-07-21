@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.model.items.BookmarkItem;
 import org.zirco.model.items.HistoryItem;
 import org.zirco.providers.BookmarksProviderWrapper;
@@ -54,6 +54,8 @@ public class ApplicationUtils {
 	private static String mRawStartPageHistory = null;
 	
 	private static String mRawStartPageSearch = null;
+	
+	private static String mRawBlockedUrlPageBody = null;
 	
 	private static int mFaviconSize = -1;	
 	private static int mImageButtonSize = -1;
@@ -461,6 +463,13 @@ public class ApplicationUtils {
 		return result;
 	}
 	
+	private static String getBlockedUrlBodyHtml(Context context, String url) {
+		String blockedUrls = String.format(context.getResources()
+				.getString(R.string.BlockedUrlPage_Urls), url);
+		 return String.format(mRawBlockedUrlPageBody, context.getResources()
+					.getString(R.string.BlockedUrlPage_Tip), blockedUrls);
+	}
+	
 	/**
 	 * Load the start page html.
 	 * @param context The current context.
@@ -497,6 +506,23 @@ public class ApplicationUtils {
 		
 		return result;
 	}
+	
+    public static String getBlockedUrlPage(Context context, String url) {
+        if (mRawStartPage == null) {
+
+            mRawStartPage = getStringFromRawResource(context, R.raw.start);
+            mRawStartPageStyles = getStringFromRawResource(context,
+                    R.raw.start_style);
+        }
+
+        if (mRawBlockedUrlPageBody == null) {
+            mRawBlockedUrlPageBody = getStringFromRawResource(context, R.raw.blockedurl_body);
+        }
+
+        return String.format(mRawStartPage, mRawStartPageStyles, context
+                .getResources().getString(R.string.BlockedUrlPage_Welcome),
+                getBlockedUrlBodyHtml(context, url));
+    }
 	
 	/**
 	 * Get the application version code.

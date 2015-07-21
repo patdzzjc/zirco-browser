@@ -15,7 +15,7 @@
 
 package org.zirco.ui.activities;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.controllers.Controller;
 import org.zirco.model.DbAdapter;
 import org.zirco.utils.ApplicationUtils;

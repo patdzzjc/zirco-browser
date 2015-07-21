@@ -15,7 +15,7 @@
 
 package org.zirco.model.adapters;
 
-import org.zirco.R;
+import com.polysaas.browser.R;
 import org.zirco.providers.WeaveColumns;
 
 import android.content.Context;
